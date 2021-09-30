@@ -26,4 +26,8 @@ programmer.add_tech('python') \
     .add_tech('aws')
 
 @patch('random.choice')
-def test_get_random_tech():
+def test_get_random_tech(mock_random):
+    mock_random.return_value = 'c++'
+    return programmer.get_random_tech()
+
+print(test_get_random_tech())

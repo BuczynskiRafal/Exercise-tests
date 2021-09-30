@@ -16,9 +16,9 @@ def is_prime(n):
 
 
 def calculate(index):
-    lista = []
-    n = 4
-    while len(lista) < index:
+    counter = 0
+    number = 4
+    while counter != 100:
         if n == 2:
             lista.append(n)
             n = n + 1

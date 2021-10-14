@@ -1,31 +1,5 @@
-def is_prime(n):
+value = '[gt]666'
 
-    if n < 2:
-        return False
-
-    if n % 2 == 0:
-        return n == 2
-
-    i = 3
-    while i * i <= n:
-        if n % i == 0:
-            return False
-        i += 2
-
-    return True
-
-
-def calculate(index):
-    counter = 0
-    number = 4
-    while counter != 100:
-        if n == 2:
-            lista.append(n)
-            n = n + 1
-        if is_prime(n):
-            lista.append(n)
-            print(n)
-            n = n+1
-    print(lista[index-1])
-
-calculate(6)
+if value.startswith('[gt]'):
+    value = value[4::]
+    print(value)

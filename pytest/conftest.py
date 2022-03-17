@@ -1,10 +1,22 @@
+import json
+import os
+
+from pathlib import Path
 from pytest import fixture
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+
 from config import Config
 
-# @fixture(scope='function')
-# def chrome_browser():
-#     return webdriver.Chrome()
+
+BASE_DIR = Path(__file__).resolve().parent
+
+DATA_PATH = BASE_DIR / 'test_data.json'
+
+
+@fixture(scope='function')
+def chrome_browser():
+    return webdriver.Chrome()
 
 
 @fixture(scope='session')
@@ -46,7 +58,7 @@ def env(request):
 
 
 """
-Środowisko można ustawić w terminalu używając polecenia 
+Środowisko można ustawić w terminalu używając polecenia
 pytest --env qa
 pytest --env dev
 """
@@ -56,3 +68,27 @@ pytest --env dev
 def app_config(env):
     cfg = Config(env)
     return cfg
+
+
+def load_test_data(path):
+    with open(path) as data_file:
+        data = json.load(data_file)
+        return data
+
+
+### handling skips and expected failuers
+@fixture(params=[webdriver.Chrome, webdriver.Firefox, webdriver.Edge])
+def browser(request):
+    driver = request.param
+    drvr = driver(ChromeDriverManager().install())
+    yield drvr
+    drvr.quit()
+
+
+@fixture(params=load_test_data(DATA_PATH))
+def test_data(request):
+    data = request.param
+    return data
+
+
+
